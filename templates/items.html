@@ -1,0 +1,24 @@
+{%extends 'layout.html' %}
+{% import "view_item_component.html" as view_item_component %}
+{% import "paginate_component.html" as paginate_component %}
+
+{%block content%}
+<div class="container">
+	<div class="row row-cols-4">
+		{%for item in items %}
+			<div class="col p-2">
+				<div class="border text-center p-3">
+				<img src="{{url_for('static',filename=item.img )}}" class="img-thumbnail">
+				{{view_item_component.view_item(item)}}
+				<a href="{{url_for('store_app.view_item',item_id=item.id)}}"><button class="btn btn-warning">Дивитись більше</button></a>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	{{paginate_component.render_pagination(items,'store_app.view_items')}}
+</div>
+
+
+
+{%endblock%}
+

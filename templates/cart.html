@@ -1,0 +1,38 @@
+{%extends 'layout.html' %}
+
+{% block content %}
+{%if cart.count() %}
+	<div class="container text-center">
+		<h2>Кількість товарів в корзині {{cart.count()}}</h2>
+
+		<h4>Загальна вартість товарів - {{cart.get_price()}}</h4>
+		<hr>
+
+		<a href="{{url_for('store_app.clear_cart')}}"><button class="btn btn-danger">очистити корзину</button></a>
+
+<div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+
+  <div class="list-group">
+
+  	{%for item in cart.items %}
+    <a href="{{url_for('store_app.view_item',item_id=item.id)}}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <img src="https://github.com/twbs.png" alt="twbs" class="rounded-circle flex-shrink-0" width="32" height="32">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">{{item.name}}</h6>
+          <p class="mb-0 opacity-75">{{item.description}}</p>
+        </div>
+        <small class="opacity-50 text-nowrap">Ціна: {{item.price}}</small>
+      </div>
+    </a>
+    {%endfor%}
+  </div>
+</div>
+
+	<a href="{{url_for('store_app.create_order')}}"><button class="btn btn-primary">Оформити замовлення</button></a>
+
+	</div>
+{%else%}
+	<h3 align="center">Корзина порожня</h3>
+{%endif%}
+{% endblock %}

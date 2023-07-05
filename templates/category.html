@@ -1,0 +1,56 @@
+{% extends 'layout.html'%}
+{% import "view_item_component.html" as view_item_component %}
+{% import "paginate_component.html" as paginate_component %}
+
+{%block content%}
+
+
+
+
+	{%if category%}
+
+		<div class="px-4 pt-5 my-5 text-center border-bottom">
+		    <h1 class="display-4 fw-bold text-body-emphasis">{{category.name}}</h1>
+		    <div class="col-lg-6 mx-auto">
+		      <p class="lead mb-4">{{category.description}}</p>
+
+		    </div>
+		    <div class="overflow-hidden" style="max-height: 30vh;">
+		      <div class="container px-5">
+		        <img src="{{url_for('static',filename=category.img)}}" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" loading="lazy" width="700" height="500">
+		      </div>
+		    </div>
+		  </div>
+
+		{%if items%}
+
+		<div class="container">
+			<div class="row row-cols-3">
+				{%for item in items %}
+					<div class="col p-2">
+						<div class="border text-center p-3">
+						<img src="{{url_for('static',filename=item.img )}}" class="img-thumbnail">
+						{{view_item_component.view_item(item)}}
+						<a href="{{url_for('store_app.view_item',item_id=item.id)}}"><button class="btn btn-warning">Дивитись більше</button></a>
+					</div>
+				</div>
+		{% endfor %}
+	</div>
+	{{paginate_component.render_pagination(items,'store_app.view_category')}}
+
+
+
+</div>
+
+
+
+
+
+		{%else%}
+			<h3 align="center">Товарів поки що немає</h3>
+		{%endif%}
+
+	{%else%}
+		<h3 align="center">Невірний номер категорії</h3>
+	{%endif%}
+{%endblock%}

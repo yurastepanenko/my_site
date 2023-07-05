@@ -1,0 +1,27 @@
+{%extends 'layout.html'%}
+
+{%block content%}
+
+	{% if item %}
+		<div class="container text-center">
+
+			<img src="{{url_for('static',filename=item.img )}}" class="img-thumbnail">
+			<h1>{{item.name}}</h1>
+			<p>{{item.description}}</p>
+			<h4>Ціна:{{item.price}}</h4>
+
+			<hr>
+			{%if item.categories %}
+				<h6>Категорії товару</h6>
+				{% for category in item.categories %}
+					<a href="{{url_for('store_app.view_category',category_id=category.id)}}"><h5 align="center">{{category.name}}</h5></a>
+					<hr>
+				{%endfor%}
+			{%endif%}
+			<a href="{{url_for('store_app.add_to_cart',item_id=item.id)}}"><button class="btn btn-success">Додати до кошику</button></a>
+
+		</div>
+	{%else%}
+		<h3 align="center">Невірний номер товару</h3>
+	{% endif %}
+{%endblock%}
